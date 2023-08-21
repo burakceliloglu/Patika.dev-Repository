@@ -1,0 +1,73 @@
+<h1>Emmet</h1>
+<!-- 
+    Etiket isimlerini direkt verebiliyoruz.
+    + Kardeş öğe
+    > İçinde Öğe
+    ^ Yukarı çık ve öğe oluştur
+    * Çarp -> p*3
+    Lorem / Lorem4 (4 kelimelik lorem)
+    . Class
+ -->
+
+<!-- h1+p+p+h2+p+p -->
+<h1></h1>
+<p></p>
+<p></p>
+<h2></h2>
+<p></p>
+<p></p>
+ 
+<!-- h1+p+p+h2+p+p -> h1+p*2+h2+p*2 -->
+<h1></h1>
+<p></p>
+<p></p>
+<h2></h2>
+<p></p>
+<p></p>
+
+<!-- ul>li*5 -->
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<!-- ul>li*3^p -->
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<p></p>
+
+<!-- ul>li*3>lorem1^^p*2>lorem4^h3>lorem1 -->
+<ul>
+    <li>Lorem.</li>
+    <li>Consequuntur?</li>
+    <li>Voluptatem.</li>
+</ul>
+<p>Lorem ipsum dolor sit.</p>
+<p>Ipsam enim aspernatur distinctio.</p>
+<h3>Lorem.</h3>
+
+<!-- h3.deneme / h3.deneme.deneme2 -->
+<h3 class="deneme"></h3>
+<h3 class="deneme deneme2"></h3>
+
+<!-- h2#idolussun -->
+<h2 id="idolussun"></h2>
+<!-- ul>li#idNo$*3 otomatik olarak sıralıyor.-->
+<ul>
+    <li id="idNo1"></li>
+    <li id="idNo2"></li>
+    <li id="idNo3"></li>
+</ul>
+
+<!-- h3.deneme#idolussun>lorem1 -->
+<h3 class="deneme" id="idolussun">Lorem.</h3>
+
+<!-- p{emet ile tag içine yazı yazmak} -->
+<p>emet ile tag içine yazı yazmak</p>
+
