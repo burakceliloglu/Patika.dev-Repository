@@ -1,0 +1,28 @@
+body{
+    margin: 0;
+    background-color: #E9ECEF;
+    text-align: center;
+}
+
+.nav-texts{
+    text-decoration: none;
+    margin: 7px 30px 15px;
+    color: aliceblue;
+    float: left; 
+}
+
+.nav{
+    background-color: rgb(32, 32, 32);
+    height: 50px;
+    padding-top: 15px;
+}
+
+.list-center{
+    display: inline-block;
+    text-align: left;
+}
+
+.image{
+    width: 100;
+    height: 100;
+}
