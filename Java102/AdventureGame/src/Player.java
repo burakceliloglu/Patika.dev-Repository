@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Player {
-    // Inventory inventory;
+    Inventory inventory;
     private int damage;
     private int health;
     private int money;
@@ -11,6 +11,7 @@ public class Player {
 
     public Player(String userName){
         this.userName = userName;
+        this.inventory = new Inventory();
     }
 
     public int getDamage() {
@@ -53,12 +54,20 @@ public class Player {
         this.characterName = characterName;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     public void selectCharacter() {
-        System.out.println("***** Character Selection ******");
+        System.out.println("***** Character Selection *****");
         System.out.println("1-Samurai (Damage=5 Health=21 Money=15)\n" +
                 "2-Hawkeye (Damage=7 Health=18 Money=20)" +
                 "\n3-Soldier (Damage=8 Health=24 Money=5)\n*********" +
-                "***********************");
+                "**********************");
         System.out.print("Choose your character(1/2/3): ");
         int selection = scanner.nextInt();
 
@@ -86,7 +95,16 @@ public class Player {
                 System.out.println("Invalid Number!");
                 break;
         }
-        System.out.println("Your character is -> " + this.characterName);
-        System.out.println();
+        System.out.println("Your character is -> " + this.characterName + "\n");
+    }
+
+    public void printInfo(){
+        System.out.println(
+                "Your weapon: " + this.getInventory().getWeaponName() +
+                "\nYour damage: " + this.getDamage() +
+                "\nYour health: " + this.getHealth() +
+                "\nYour money: " + this.getMoney()
+        );
+
     }
 }
