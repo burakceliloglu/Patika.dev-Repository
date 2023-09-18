@@ -19,8 +19,8 @@ public class Game {
             player.printInfo();
             Location location = null;
             System.out.println("********** Locations **********");
-            System.out.println("1-Safe House\n2-Tool Store" +
-                    "\n*******************************");
+            System.out.println("1-Safe House\n2-Tool Store\n3-Cave\n" +
+                    "4-Forest\n5-River\n*******************************");
             System.out.print("Choose where you want to go:");
             int locationSelection = scanner.nextInt();
             switch(locationSelection){
@@ -29,6 +29,15 @@ public class Game {
                     break;
                 case 2:
                     location = new ToolStore(player);
+                    break;
+                case 3:
+                    location = new Cave(player);
+                    break;
+                case 4:
+                    location = new Forest(player);
+                    break;
+                case 5:
+                    location = new River(player);
                     break;
                 default:
                     location = new SafeHouse(player);
