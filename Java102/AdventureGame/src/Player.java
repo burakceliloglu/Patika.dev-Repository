@@ -7,6 +7,7 @@ public class Player {
     private int money;
     private String userName;
     private String characterName;
+    private int defaultHealth;
     private Scanner scanner = new Scanner(System.in);
 
     public Player(String userName){
@@ -62,6 +63,14 @@ public class Player {
         this.inventory = inventory;
     }
 
+    public int getDefaultHealth() {
+        return defaultHealth;
+    }
+
+    public void setDefaultHealth(int defaultHealth) {
+        this.defaultHealth = defaultHealth;
+    }
+
     public void selectCharacter() {
         System.out.println("***** Character Selection *****");
         System.out.println("1-Samurai (Damage=5 Health=21 Money=15)\n" +
@@ -78,18 +87,21 @@ public class Player {
                 this.damage = 5;
                 this.health = 21;
                 this.money = 15;
+                this.defaultHealth = 21;
                 break;
             case 2:
                 this.characterName = "Hawkeye";
                 this.damage = 7;
                 this.health = 18;
                 this.money = 20;
+                this.defaultHealth = 18;
                 break;
             case 3:
                 this.characterName = "Soldier";
                 this.damage = 8;
                 this.health = 24;
                 this.money = 5;
+                this.defaultHealth = 24;
                 break;
             default:
                 System.out.println("Invalid Number!");
