@@ -20,7 +20,7 @@ public class Game {
             Location location = null;
             System.out.println("********** Locations **********");
             System.out.println("1-Safe House\n2-Tool Store\n3-Cave\n" +
-                    "4-Forest\n5-River\n*******************************");
+                    "4-Forest\n5-River\n6-Mine\n*******************************");
             System.out.print("Choose where you want to go:");
             int locationSelection = scanner.nextInt();
             switch(locationSelection){
@@ -31,13 +31,35 @@ public class Game {
                     location = new ToolStore(player);
                     break;
                 case 3:
-                    location = new Cave(player);
+                    if(player.getInventory().isFood()){
+                        System.out.println("The award already taken.");
+                        System.out.println("You can't go to the Cave.");
+                        location = new SafeHouse(player);
+                    } else{
+                        location = new Cave(player);
+                    }
                     break;
                 case 4:
-                    location = new Forest(player);
+                    if(player.getInventory().isFireWood()){
+                        System.out.println("The award already taken.");
+                        System.out.println("You can't go to the Forest.");
+                        location = new SafeHouse(player);
+                        break;
+                    } else{
+                        location = new Forest(player);
+                    }
                     break;
                 case 5:
-                    location = new River(player);
+                    if(player.getInventory().isWater()){
+                        System.out.println("The award already taken.");
+                        System.out.println("You can't go to the River.");
+                        location = new SafeHouse(player);
+                    } else{
+                        location = new River(player);
+                    }
+                    break;
+                case 6:
+                    location = new Mine(player);
                     break;
                 default:
                     location = new SafeHouse(player);

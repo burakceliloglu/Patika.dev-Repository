@@ -1,7 +1,7 @@
 public class Inventory {
-    boolean water;
-    boolean food;
-    boolean fireWood;
+    private boolean water;
+    private boolean food;
+    private boolean fireWood;
     private String weaponName;
     private String armorName;
     private int weaponDamage;
@@ -12,6 +12,9 @@ public class Inventory {
         this.weaponDamage = 0;
         this.armorName = "Naked";
         this.armorDefence = 0;
+        this.fireWood = false;
+        this.water = false;
+        this.food = false;
     }
 
     public String getWeaponName() {
@@ -44,5 +47,29 @@ public class Inventory {
 
     public void setArmorDefence(int armorDefence) {
         this.armorDefence = armorDefence;
+    }
+
+    public boolean isWater() {
+        return water;
+    }
+
+    public void setWater(boolean water) {
+        this.water = water;
+    }
+
+    public boolean isFood() {
+        return food;
+    }
+
+    public void setFood(boolean food) {
+        this.food = food;
+    }
+
+    public boolean isFireWood() {
+        return fireWood;
+    }
+
+    public void setFireWood(boolean fireWood) {
+        this.fireWood = fireWood;
     }
 }
