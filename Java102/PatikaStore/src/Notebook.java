@@ -1,5 +1,5 @@
 public class Notebook extends Device{
-    public Notebook(int price, String brandName, int storage, int screen, int ram) {
-        super(price, brandName, storage, screen, ram);
+    public Notebook(String fullname, int price, String brandName, int storage, double screen, int ram) {
+        super(fullname, price, brandName, storage, screen, ram);
     }
 }

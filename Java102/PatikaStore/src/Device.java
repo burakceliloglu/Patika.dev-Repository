@@ -1,11 +1,13 @@
 public class Device {
+    private String fullName;
     private int price;
     private String brandName;
     private int storage;
-    private int screen;
+    private double screen;
     private int ram;
 
-    public Device(int price, String brandName, int storage, int screen, int ram) {
+    public Device(String fullName, int price, String brandName, int storage, double screen, int ram) {
+        this.fullName = fullName;
         this.price = price;
         this.brandName = brandName;
         this.storage = storage;
@@ -37,11 +39,11 @@ public class Device {
         this.storage = storage;
     }
 
-    public int getScreen() {
+    public double getScreen() {
         return screen;
     }
 
-    public void setScreen(int screen) {
+    public void setScreen(double screen) {
         this.screen = screen;
     }
 
@@ -51,5 +53,13 @@ public class Device {
 
     public void setRam(int ram) {
         this.ram = ram;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

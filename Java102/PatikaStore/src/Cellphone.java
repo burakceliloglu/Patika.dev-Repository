@@ -2,8 +2,8 @@ public class Cellphone extends Device{
     private int camera;
     private int battery;
     private String color;
-    public Cellphone(int price, String brandName, int storage, int screen, int ram, int camera, int battery, String color) {
-        super(price, brandName, storage, screen, ram);
+    public Cellphone(String fullName ,int price, String brandName, int storage, double screen, int ram, int camera, int battery, String color) {
+        super(fullName, price, brandName, storage, screen, ram);
         this.camera = camera;
         this.battery = battery;
         this.color = color;
