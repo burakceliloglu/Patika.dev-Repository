@@ -1,4 +1,8 @@
+import java.util.Scanner;
+
 public class Device {
+    private static int count = 0;
+    private int id;
     private String fullName;
     private int price;
     private String brandName;
@@ -7,12 +11,21 @@ public class Device {
     private int ram;
 
     public Device(String fullName, int price, String brandName, int storage, double screen, int ram) {
+        setId(++this.count);
         this.fullName = fullName;
         this.price = price;
         this.brandName = brandName;
         this.storage = storage;
         this.screen = screen;
         this.ram = ram;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPrice() {

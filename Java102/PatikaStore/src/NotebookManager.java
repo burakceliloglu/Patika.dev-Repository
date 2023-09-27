@@ -29,9 +29,8 @@ public class NotebookManager {
                 "---------------------------" +
                 "-------------------------------------------------------\n",
                 name,price,brand,storage,screen,ram);
-        int index = 1;
         for(Notebook notebook : notebooks){
-            System.out.printf("| %-2d | %-20s | %-8d | %-8s | %-14d | %-8.1f | %-8d |\n",index++,notebook.getFullName(),notebook.getPrice(),notebook.getBrandName(),notebook.getStorage(),notebook.getScreen(),notebook.getRam());
+            System.out.printf("| %-2d | %-20s | %-8d | %-8s | %-14d | %-8.1f | %-8d |\n",notebook.getId(),notebook.getFullName(),notebook.getPrice(),notebook.getBrandName(),notebook.getStorage(),notebook.getScreen(),notebook.getRam());
         }
         System.out.println("----------------------------------------" +
                 "--------------------------------------------------");
