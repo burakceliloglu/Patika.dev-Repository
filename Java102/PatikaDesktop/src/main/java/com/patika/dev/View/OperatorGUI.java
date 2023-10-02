@@ -8,6 +8,8 @@ import com.patika.dev.Model.User;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,6 +78,23 @@ public class OperatorGUI extends JFrame {
 
             }
 
+        });
+
+        tbl_userlist.getModel().addTableModelListener(e -> {
+            if(e.getType() == TableModelEvent.UPDATE){
+                int user_id = Integer.parseInt(tbl_userlist.getValueAt(tbl_userlist.getSelectedRow(),0).toString());
+                String name = tbl_userlist.getValueAt(tbl_userlist.getSelectedRow(),1).toString();
+                String username = tbl_userlist.getValueAt(tbl_userlist.getSelectedRow(),2).toString();
+                String password = tbl_userlist.getValueAt(tbl_userlist.getSelectedRow(),3).toString();
+                String type = tbl_userlist.getValueAt(tbl_userlist.getSelectedRow(),4).toString();
+
+                if(User.update(user_id,name,username,password,type)){
+                    Helper.showMessage("update");
+                    loadUserModel();
+                }
+
+                loadUserModel();
+            }
         });
 
         btn_user_enter.addActionListener(e -> {

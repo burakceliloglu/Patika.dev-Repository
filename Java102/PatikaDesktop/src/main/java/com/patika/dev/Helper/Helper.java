@@ -63,6 +63,10 @@ public class Helper {
                 message = "Data successfully deleted.";
                 title = "SUCCESS!";
                 break;
+            case "update":
+                message = "Data successfully updated.";
+                title = "SUCCESS!";
+                break;
             default:
                 break;
         }

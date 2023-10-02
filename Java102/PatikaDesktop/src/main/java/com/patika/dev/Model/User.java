@@ -137,19 +137,36 @@ public class User {
     }
 
     public static boolean delete(int id){
-        for(User user : User.getList()){
-            if(user.getId() == id){
-                String sql = "DELETE FROM user WHERE id = ?;";
-                try {
-                    PreparedStatement statement = DbHelper.getConnection().prepareStatement(sql);
-                    statement.setInt(1,id);
-                    return statement.executeUpdate() != -1;
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        String sql = "DELETE FROM user WHERE id = ?;";
+        try {
+            PreparedStatement statement = DbHelper.getConnection().prepareStatement(sql);
+            statement.setInt(1,id);
+            return statement.executeUpdate() != -1;
+        } catch (SQLException e) {
+            Helper.showMessage("error");
+            throw new RuntimeException(e);
         }
-        Helper.showMessage("error");
-        return false;
+    }
+
+    public static boolean update(int id, String name, String username, String password, String type){
+        String sql = "UPDATE user SET name=?, username=?, password=?, type=? WHERE id=?;";
+        User findUser = User.getFetch(username);
+        // güncelleme işlemini yaparken type'a farklı bir şey yazılmasını engelle.
+        if(findUser != null && findUser.getId() != id){
+            Helper.showMessage("duplicate");
+            return false;
+        }
+        try {
+            PreparedStatement statement = DbHelper.getConnection().prepareStatement(sql);
+            statement.setString(1,name);
+            statement.setString(2,username);
+            statement.setString(3,password);
+            statement.setString(4,type);
+            statement.setInt(5,id);
+            return statement.executeUpdate() != -1;
+        } catch (SQLException e) {
+            Helper.showMessage("error");
+            throw new RuntimeException(e);
+        }
     }
 }
