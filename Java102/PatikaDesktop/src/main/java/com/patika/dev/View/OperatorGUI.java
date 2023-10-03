@@ -6,13 +6,9 @@ import com.patika.dev.Model.Operator;
 import com.patika.dev.Model.User;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class OperatorGUI extends JFrame {
 
@@ -33,9 +29,18 @@ public class OperatorGUI extends JFrame {
     private JLabel lbl_user_id;
     private JTextField fld_user_id;
     private JButton btn_user_delete;
+    private JTextField fld_search_name_surname;
+    private JTextField fld_search_username;
+    private JComboBox cmb_search_type;
+    private JButton btn_search;
+    private JPanel pnl_patika_list;
+    private JTable tbl_patika_list;
+    private JScrollPane scrl_patika_list;
     private DefaultTableModel mdl_user_list;
     private Object[] row_user_list;
     private final Operator operator;
+    private DefaultTableModel md_patika_list;
+    private Object[] row_patika_list;
     public OperatorGUI(Operator operator) {
         this.operator = operator;
 
@@ -65,10 +70,29 @@ public class OperatorGUI extends JFrame {
         mdl_user_list.setColumnIdentifiers(col_user_list);
         row_user_list = new Object[col_user_list.length];
 
+        //patika list
+        md_patika_list = new DefaultTableModel(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if(column == 0){
+                    return false;
+                }
+                return super.isCellEditable(row, column);
+            }
+        };
+
+        Object[] col_patika_name = {"ID","Patika Name"};
+        md_patika_list.setColumnIdentifiers(col_patika_name);
+        row_patika_list = new Object[col_patika_name.length];
+
         loadUserModel();
 
         tbl_userlist.setModel(mdl_user_list);
         tbl_userlist.getTableHeader().setReorderingAllowed(false);
+
+        tbl_patika_list.setModel(md_patika_list);
+        tbl_patika_list.getTableHeader().setReorderingAllowed(false);
 
         tbl_userlist.getSelectionModel().addListSelectionListener(e -> {
             try{
@@ -126,12 +150,34 @@ public class OperatorGUI extends JFrame {
                 }
             }
         });
+        btn_search.addActionListener(e -> {
+            String name = fld_search_name_surname.getText();
+            String username = fld_search_username.getText();
+            String type = cmb_search_type.getSelectedItem().toString();
+            loadUserModel(User.searchUser(User.executeQuery(name,username,type)));
+        });
+        btn_exit.addActionListener(e -> {
+            dispose();
+        });
     }
 
     public void loadUserModel(){
         DefaultTableModel clearModel = (DefaultTableModel) tbl_userlist.getModel();
         clearModel.setRowCount(0);
         for(User user : User.getList()){
+            int i = 0;
+            row_user_list[i++] = user.getId();
+            row_user_list[i++] = user.getName();
+            row_user_list[i++] = user.getUsername();
+            row_user_list[i++] = user.getPassword();
+            row_user_list[i++] = user.getType();
+            mdl_user_list.addRow(row_user_list);
+        }
+    }
+    public void loadUserModel(ArrayList<User> list){
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_userlist.getModel();
+        clearModel.setRowCount(0);
+        for(User user : list){
             int i = 0;
             row_user_list[i++] = user.getId();
             row_user_list[i++] = user.getName();
