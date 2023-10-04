@@ -3,11 +3,17 @@ package com.patika.dev.View;
 import com.patika.dev.Helper.Config;
 import com.patika.dev.Helper.Helper;
 import com.patika.dev.Model.Operator;
+import com.patika.dev.Model.Patika;
 import com.patika.dev.Model.User;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class OperatorGUI extends JFrame {
@@ -36,11 +42,14 @@ public class OperatorGUI extends JFrame {
     private JPanel pnl_patika_list;
     private JTable tbl_patika_list;
     private JScrollPane scrl_patika_list;
+    private JTextField fld_patika_name;
+    private JButton btn_add_patika;
     private DefaultTableModel mdl_user_list;
     private Object[] row_user_list;
     private final Operator operator;
     private DefaultTableModel md_patika_list;
     private Object[] row_patika_list;
+    private JPopupMenu patikaMenu;
     public OperatorGUI(Operator operator) {
         this.operator = operator;
 
@@ -69,8 +78,18 @@ public class OperatorGUI extends JFrame {
         Object[] col_user_list = {"ID", "Name", "Username", "Password", "Type"};
         mdl_user_list.setColumnIdentifiers(col_user_list);
         row_user_list = new Object[col_user_list.length];
+        tbl_userlist.setModel(mdl_user_list);
+        tbl_userlist.getTableHeader().setReorderingAllowed(false);
+
+        loadUserModel();
 
         //patika list
+        patikaMenu = new JPopupMenu();
+        JMenuItem update = new JMenuItem("Update");
+        JMenuItem delete = new JMenuItem("Delete");
+        patikaMenu.add(update);
+        patikaMenu.add(delete);
+
         md_patika_list = new DefaultTableModel(){
 
             @Override
@@ -86,13 +105,21 @@ public class OperatorGUI extends JFrame {
         md_patika_list.setColumnIdentifiers(col_patika_name);
         row_patika_list = new Object[col_patika_name.length];
 
-        loadUserModel();
-
-        tbl_userlist.setModel(mdl_user_list);
-        tbl_userlist.getTableHeader().setReorderingAllowed(false);
+        loadPatikaModel();
+        tbl_patika_list.setComponentPopupMenu(patikaMenu);
 
         tbl_patika_list.setModel(md_patika_list);
         tbl_patika_list.getTableHeader().setReorderingAllowed(false);
+        tbl_patika_list.getColumnModel().getColumn(0).setMaxWidth(75);
+
+        tbl_patika_list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Point point = e.getPoint();
+                int selectedRow = tbl_patika_list.rowAtPoint(point);
+                tbl_patika_list.setRowSelectionInterval(selectedRow,selectedRow);
+            }
+        });
 
         tbl_userlist.getSelectionModel().addListSelectionListener(e -> {
             try{
@@ -159,6 +186,32 @@ public class OperatorGUI extends JFrame {
         btn_exit.addActionListener(e -> {
             dispose();
         });
+
+        btn_add_patika.addActionListener(e -> {
+            String name = fld_patika_name.getText();
+            if(fld_patika_name.getText().isEmpty()){
+                Helper.showMessage("fill");
+            } else{
+                if(Patika.add(name)){
+                    Helper.showMessage("success");
+                    loadPatikaModel();
+                    fld_patika_name.setText(null);
+                } else {
+                    Helper.showMessage("error");
+                }
+            }
+        });
+    }
+
+    private void loadPatikaModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_patika_list.getModel();
+        clearModel.setRowCount(0);
+        for(Patika patika : Patika.getList()){
+            int i=0;
+            row_patika_list[i++] = patika.getId();
+            row_patika_list[i++] = patika.getName();
+            md_patika_list.addRow(row_patika_list);
+        }
     }
 
     public void loadUserModel(){
