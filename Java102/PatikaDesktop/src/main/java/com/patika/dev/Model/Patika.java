@@ -1,6 +1,7 @@
 package com.patika.dev.Model;
 
 import com.patika.dev.Helper.DbHelper;
+import com.patika.dev.Helper.Helper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,5 +62,48 @@ public class Patika {
         }
 
         return patikaArrayList;
+    }
+
+    public static boolean update(int id, String name){
+        String query = "UPDATE patika SET name=? WHERE id=?;";
+        try {
+            PreparedStatement preparedStatement = DbHelper.getConnection().prepareStatement(query);
+            preparedStatement.setInt(2,id);
+            preparedStatement.setString(1,name);
+            return preparedStatement.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Patika getFetch(int selectId) {
+        Patika patika = null;
+        String sql = "SELECT * FROM patika WHERE id=?;";
+
+        try {
+            PreparedStatement preparedStatement = DbHelper.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,selectId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                    patika = new Patika(resultSet.getInt("id"),resultSet.getString("name"));
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return patika;
+    }
+
+    public static boolean delete(int id){
+        String sql = "DELETE FROM patika WHERE id=?;";
+        try {
+            PreparedStatement preparedStatement = DbHelper.getConnection().prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            return preparedStatement.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

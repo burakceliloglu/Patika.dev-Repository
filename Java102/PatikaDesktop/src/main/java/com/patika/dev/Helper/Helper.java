@@ -79,4 +79,18 @@ public class Helper {
     }
 
 
+    public static boolean confirm(String str) {
+        String message = null;
+        String title = null;
+        switch (str){
+            case "sure":
+                message = "Are you sure that you want to do this action?";
+                title = "???";
+                break;
+            default:
+                break;
+        }
+
+        return JOptionPane.showConfirmDialog(null,message,title,JOptionPane.YES_NO_OPTION) == 0;
+    }
 }

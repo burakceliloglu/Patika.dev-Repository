@@ -10,10 +10,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class OperatorGUI extends JFrame {
@@ -89,6 +86,29 @@ public class OperatorGUI extends JFrame {
         JMenuItem delete = new JMenuItem("Delete");
         patikaMenu.add(update);
         patikaMenu.add(delete);
+
+        update.addActionListener(e -> {
+            int selectId = Integer.parseInt(tbl_patika_list.getValueAt(tbl_patika_list.getSelectedRow(),0).toString());
+            UpdatePatikaGUI updatePatikaGUI = new UpdatePatikaGUI(Patika.getFetch(selectId));
+            updatePatikaGUI.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadPatikaModel();
+                }
+            });
+        });
+
+        delete.addActionListener(e -> {
+            if(Helper.confirm("sure")){
+                int selectedId = Integer.parseInt(tbl_patika_list.getValueAt(tbl_patika_list.getSelectedRow(),0).toString());
+                if(Patika.delete(selectedId)){
+                    Helper.showMessage("delete");
+                    loadPatikaModel();
+                } else{
+                    Helper.showMessage("error");
+                }
+            }
+        });
 
         md_patika_list = new DefaultTableModel(){
 
@@ -169,11 +189,13 @@ public class OperatorGUI extends JFrame {
             if(Helper.isFieldEmpty(fld_user_id)){
                 Helper.showMessage("fill");
             } else{
-                int id = Integer.parseInt(fld_user_id.getText());
-                if(User.delete(id)){
-                    Helper.showMessage("delete");
-                    loadUserModel();
-                    fld_user_id.setText(null);
+                if(Helper.confirm("sure")){
+                    int id = Integer.parseInt(fld_user_id.getText());
+                    if(User.delete(id)){
+                        Helper.showMessage("delete");
+                        loadUserModel();
+                        fld_user_id.setText(null);
+                    }
                 }
             }
         });
