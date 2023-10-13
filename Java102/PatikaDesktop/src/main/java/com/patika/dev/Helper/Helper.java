@@ -48,7 +48,7 @@ public class Helper {
                 title = "WARNING!";
                 break;
             case "success":
-                message = "Data successfully added.";
+                message = "The operation was successful.";
                 title = "SUCCESS!";
                 break;
             case "error":
@@ -66,6 +66,10 @@ public class Helper {
             case "update":
                 message = "Data successfully updated.";
                 title = "SUCCESS!";
+                break;
+            case "userNotFound":
+                message = "User not found in database.";
+                title = "ERROR!";
                 break;
             default:
                 break;

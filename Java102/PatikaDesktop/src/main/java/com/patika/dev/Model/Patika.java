@@ -98,6 +98,12 @@ public class Patika {
 
     public static boolean delete(int id){
         String sql = "DELETE FROM patika WHERE id=?;";
+        ArrayList<Course> courseArrayList = Course.getList();
+        for(Course obj : courseArrayList){
+            if(obj.getPatika().getId() == id){
+                Course.delete(obj.getId());
+            }
+        }
         try {
             PreparedStatement preparedStatement = DbHelper.getConnection().prepareStatement(sql);
             preparedStatement.setInt(1,id);

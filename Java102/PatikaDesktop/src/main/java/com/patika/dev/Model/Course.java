@@ -1,6 +1,7 @@
 package com.patika.dev.Model;
 
 import com.patika.dev.Helper.DbHelper;
+import com.patika.dev.Helper.Helper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,5 +104,54 @@ public class Course {
             throw new RuntimeException(e);
         }
         return courseArrayList;
+    }
+
+    public static boolean add(int user_id, int patika_id, String name, String lang){
+        String query = "INSERT INTO course(user_id,patika_id,name,lang) VALUES (?,?,?,?);";
+        try {
+            PreparedStatement preparedStatement = DbHelper.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1,user_id);
+            preparedStatement.setInt(2,patika_id);
+            preparedStatement.setString(3,name);
+            preparedStatement.setString(4,lang);
+            return preparedStatement.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ArrayList<Course> getListByUser(int user_id){
+        String query = "SELECT * FROM course WHERE user_id = " + user_id;
+        ArrayList<Course> courseArrayList = new ArrayList<>();
+        Course course;
+        try {
+            Statement statement = DbHelper.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next()){
+                int id = resultSet.getInt("id");
+                int userId= resultSet.getInt("user_id");
+                int patika_id = resultSet.getInt("patika_id");
+                String name = resultSet.getString("name");
+                String lang = resultSet.getString("lang");
+                course = new Course(id,userId,patika_id,name,lang);
+                courseArrayList.add(course);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courseArrayList;
+    }
+
+    public static boolean delete(int id){
+        String sql = "DELETE FROM course WHERE id = ?;";
+        ArrayList<Course> courseArrayList = Course.getListByUser(id);
+        try {
+            PreparedStatement statement = DbHelper.getConnection().prepareStatement(sql);
+            statement.setInt(1,id);
+            return statement.executeUpdate() != -1;
+        } catch (SQLException e) {
+            Helper.showMessage("error");
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -160,6 +160,10 @@ public class User {
 
     public static boolean delete(int id){
         String sql = "DELETE FROM user WHERE id = ?;";
+        ArrayList<Course> courseArrayList = Course.getListByUser(id);
+        for(Course c : courseArrayList){
+            Course.delete(c.getId());
+        }
         try {
             PreparedStatement statement = DbHelper.getConnection().prepareStatement(sql);
             statement.setInt(1,id);
@@ -222,6 +226,36 @@ public class User {
             query = query.replace("{{type}}",type);
         }
         return query;
+    }
+
+    public static User getFetch(String username, String password){
+        User user = null;
+        String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+        try {
+            PreparedStatement statement = DbHelper.getConnection().prepareStatement(sql);
+            statement.setString(1,username);
+            statement.setString(2,password);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                switch(resultSet.getString("type")){
+                    case "operator":
+                        user = new Operator();
+                        break;
+                    default:
+                        user = new User();
+                        break;
+                }
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setType(resultSet.getString("type"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return user;
     }
 }
 
